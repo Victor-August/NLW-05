@@ -1,4 +1,5 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Repository } from "typeorm";
+import { Setting } from "../entities/Settings";
 import { SettingsRepository } from "../repositories/SettingsRepository";
 
 /*
@@ -12,29 +13,29 @@ interface ISettingsCreate {
 }
 
 class SettingsService {
+    private settingsRepository: Repository<Setting>;
+    constructor() {
+        this.settingsRepository = getCustomRepository(SettingsRepository);
+    }
 
     async create({ chat, username }: ISettingsCreate) {
-        const settingsRepository = getCustomRepository(SettingsRepository);
 
         //SELECT * FROM settings WHERE username = "username" limit 1;
         //Procura o nome no cadastro e valida se já possui 1
-        const userAlreadyExists = await settingsRepository.findOne({
+        const userAlreadyExists = await this.settingsRepository.findOne({
             username
         });
-
         //Ao passar um throw, é necessário repassar ao controller para que seja exibida a mensagem do erro (camada onde está sendo utilizado)
         //caso contrário o Post ficará apenas carregando.
         //utilizado o try{}catch(){}
         if (userAlreadyExists) {
             throw new Error("User already exists!") //Valida se o nome acima procurado no banco já existe.
         }
-
-        const settings = settingsRepository.create({
+        const settings = this.settingsRepository.create({
             chat,
             username,
         });
-
-        await settingsRepository.save(settings);
+        await this.settingsRepository.save(settings);
         return settings;
     }
 }
