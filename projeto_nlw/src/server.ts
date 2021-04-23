@@ -13,7 +13,7 @@ app.listen(3333, () => console.log("Server is running on port 3333"))
 
 /*
 * GET = Buscas
-* POST = Criacao
+* POST = Criação
 * PuT = Alteração
 * DELETE = Deletar
 * PATCH = Alterar uma informação específica
