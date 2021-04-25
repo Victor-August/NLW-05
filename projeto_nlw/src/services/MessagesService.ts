@@ -10,7 +10,8 @@ interface IMessageCreate {
 
 class MessagesService {
 
-    private messagesRepository: Repository<Message>
+    private messagesRepository: Repository<Message>;
+
     constructor() {
         this.messagesRepository = getCustomRepository(MessagesRepository); //buscando o repositório
     }
@@ -21,6 +22,7 @@ class MessagesService {
             text,
             user_id,
         });
+
         await this.messagesRepository.save(message);
         return message;
     }

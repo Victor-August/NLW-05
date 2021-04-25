@@ -10,6 +10,8 @@ const usersController = new UsersController();
 const messagesController = new MessagesController();
 
 routes.post('/settings', settingsController.create);
+routes.get('/settings/:username', settingsController.findByUsername);
+routes.put('/settings/:username', settingsController.update);
 
 routes.post('/users', usersController.create);
 
@@ -28,4 +30,18 @@ export { routes };
 * http://localhost:3333/settings/1?search=algumacoisa&
 *
 * Body params => {passa objetos (json)}
+*/
+
+
+/*
+* GET = Buscas
+* POST = Criação
+* PuT = Alteração
+* DELETE = Deletar
+* PATCH = Alterar uma informação específica
+*/
+
+/* Express
+* Request => tudo que ta vindo da minha requisição
+* Response => tudo que vou retornar para o meu usuário
 */
